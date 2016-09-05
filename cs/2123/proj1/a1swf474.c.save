@@ -1,0 +1,159 @@
+/**************************************************************************************
+Assignment 1
+**************************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "cs2123a1.h"
+
+int n;
+//Student *students;
+
+int main (int argc, char *argv[])
+{
+FILE *pfileStudent;
+int iScanfCnt, iAge, iId;
+float fGPA;
+char szName[255];
+int numStudents = 0;
+char szInputBuffer[100];
+int iLineCount = 0;
+int bValidId = FALSE;
+pfileStudent = fopen("data_a1.txt", "r");
+
+printf("CS 2123 Assignment 1 written by Daniel Larsen.\n");
+
+	if (pfileStudent == NULL)
+	{
+		printf("Error: file does not exist.\n");
+		exit(-1);
+	}
+
+	while (fgets(szInputBuffer, 100, pfileStudent) != NULL)
+	{
+		iScanfCnt = 0;
+
+		if (szInputBuffer[0] == '\n')
+			continue;
+
+		if (iLineCount == 0)
+		{
+			iScanfCnt = sscanf(szInputBuffer, "%d", &iId);
+		}
+
+		if (iLineCount == 1)
+		{
+			iScanfCnt = sscanf(szInputBuffer, "%s", szName);
+		}
+	
+		if (iLineCount == 2)
+		{
+			iScanfCnt = sscanf(szInputBuffer, "%d", &iAge);
+		}
+	
+		if (iLineCount == 3)
+		{
+			iScanfCnt = sscanf(szInputBuffer, "%f", &fGPA);
+			if (iId > 0 && strlen(szName) >= 1)
+			{
+				bValidId = TRUE;
+			}	
+		}
+
+		if (bValidId == TRUE)
+			numStudents++;
+	
+		if (iLineCount != 3)
+			iLineCount++;
+		else
+		{
+			iLineCount = 0;
+			bValidId = FALSE;
+		}
+
+
+	}
+
+fclose(pfileStudent);
+
+pfileStudent = fopen("data_a1.txt", "r");
+
+Student * students = (Student *) malloc(sizeof(Student) * numStudents);
+
+n = 1;
+
+	while (fgets(szInputBuffer, 100, pfileStudent) != NULL)
+	{
+		iScanfCnt = 0;
+
+        	if (szInputBuffer[0] == '\n')
+                	continue;
+
+	        if (iLineCount == 0)
+	        {
+	                iScanfCnt = sscanf(szInputBuffer, "%d", &iId);
+	        }
+
+	        if (iLineCount == 1)
+	        {
+	                iScanfCnt = sscanf(szInputBuffer, "%s", szName);
+        	        if (iId > 0 && strlen(szName) >= 1)
+			{
+				bValidId = TRUE;
+				students = makeStudent(iId, szName);
+			}
+			else
+				printf("Error: %d is not a positive integer for student's ID\n", iId);
+	        }
+
+	        if (iLineCount == 2)
+	        {
+        	        iScanfCnt = sscanf(szInputBuffer, "%d", &iAge);
+
+	                if (bValidId == TRUE)
+				setAge(students, iAge);
+	        }
+        
+	        if (iLineCount == 3)
+	        {
+        	        iScanfCnt = sscanf(szInputBuffer, "%f", &fGPA);
+
+	                if (bValidId == TRUE)
+				setGPA(, fGPA);
+        	}
+
+	        if (iLineCount != 3)
+		{
+       	         iLineCount++;
+			n++;
+		}
+       		else
+		{
+			iLineCount = 0;
+			bValidId = FALSE;
+		}
+
+	}
+
+return 0;
+}
+
+
+Student makeStudent(int iId, char *szName)
+{
+Student *students = (*(students + (iId-1)));
+(*(students + (iId-1))).iId = iId;
+strcpy((*(students + (iId-1))).szName,szName);
+return students;
+}
+
+void setAge(Student students, int iAge)
+{
+students.iAge = iAge;
+}
+
+void setGPA(Student students, float fGPA)
+{
+students.fGPA = fGPA;
+}
