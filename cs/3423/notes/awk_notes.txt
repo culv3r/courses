@@ -1,0 +1,113 @@
++ one or more of the preceeding regexp
+? zero or one of the preceeding regexp
+| either the preceeding or following regexp
+(...) grouping regexp
+/n newline
+/r carriage return (windows)
+/t tab
+
+AWK
+data drive, like sed. desribe data you want to work with, and perform actions when needed
+
+Basic Structure:
+pattern { action }  << pattern is optional, action is ALWAYS encapsulated in {}'s
+
+pattern - selects line from input (like address in sed)
+if no pattern given, all lines selected
+
+default action (i.e - /Pattern/ <no action> prints the matching line)
+
+PROGRAM VARIABLES
+$0 current record
+$1-$n  fields in the current record
+FILENAME name of current input file
+FS input field seperator (defautl space or tab)
+NF number of fields in curr record
+NR current record number
+OFS output field seperator (default space)
+ORS output record seperator (default newline)
+RS input record seperator (default newline)
+
+OFS - {print $1, $2, $3, etc}
+
+PATTERNS
+
+/regexp/ encloses regexp
+/Unix/ checks against $0
+$2 ~ /Unix/ checks field 2 with /Unix/
+$2 !~ /Unix/ not match test with field 2
+
+patterns can be combined with && and ||
+$2 ~ /Unix/ && $4 ~ /Linux/
+
+relational, both numeric and string
+<
+<=
+==
+!=
+>=
+>
+
+2000 <= $5 performs numeric comparison
+"2000" <= $5 performs str comparison
+2000 <= $5 && $5 < 9000
+NR == 2 checks if 2nd record
+
+ranges
+    pattern         no action
+awk 'NR ==2, NR == 4' inputfile
+
+BEGIN and END patterns
+these two are special patterns.
+BEGIN -- actions will be pervformed before any input is read
+END -- actions will be performed after all input read
+
+BEGIN {
+    print "Make Model Year"
+}
+pattern {actions}
+END{
+    print "-----------------"
+}
+
+ACTIONS
+{print}
+{print $2 $3} concatenates 2nd and third record
+{print $2,$3} use comma to seperate variables with OFS
+{count += $2} adds up second record for every line
+seperate actions with semicolons, if on same line
+{count += $2; print $2]
+    besides semicolons, can use newline to separate
+    BEGIN{
+        name = "sam"
+        count = 0
+    }
+don't need to initialize variables, but might want to
+in BEGIN
+
+unassigned numeric is 0, strings are null
+ARITHMETIC OPERATORS
+page 625 in Practical guide ot Linux
+
+***ASSOCIATIAVE ARRAYS***
+array that uses string as an index
+array[string] = value
+{grades[$1] += $2} uses first record to index array
+                   and adds up value in second record
+
+END{
+    for(student in grades){
+        print student, grades[student]
+    }
+}
+
+
+PRINTF
+
+printf "%10s", arg1
+basically like c
+
+
+FUNCTIONS
+page 624 in practical guide
+
