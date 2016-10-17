@@ -1,0 +1,11 @@
+#!/usr/bin/perl -w
+$inline = 0;
+foreach $arg ( @ARGV ){
+    open(INFILE, "$arg") or die "Can't open $arg: $!\n";
+    while ( $line = <INFILE> ){
+        $inline++;
+        chop $line;
+        print "$inline $line\n";
+    }
+}
+

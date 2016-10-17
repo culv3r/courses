@@ -1,0 +1,49 @@
+#!/usr/bin/perl
+$strings = 0;
+if ($ARGV[0] eq "-f"){
+    $strings = 1;
+  #  print "We have a switch. Parse file names only.\n";
+}
+if ($strings != 1){
+    $pattern = $ARGV[0];
+    $i = 1;
+  #  print "No switch, parse matching lines.\n";
+}
+
+if ($strings == 1){
+    $pattern = $ARGV[1];
+    $i = 2;
+}
+$j = 0;
+$fileSeen = 0;
+$file = "";
+while (defined $ARGV[$i]){
+    @files = `find $ARGV[$i] -type f`;
+    while ($files[$j]){
+        unless( -T $files[$j] ){
+            chop $files[$j];
+            open(STRINGS, "/usr/bin/strings $files[$j] |") or die "Failed to open /usr/bin/strings $!\n";
+            foreach $string (<STRINGS>){
+                if ( $fileSeen != 0 ){
+                    unless ($file eq $files[$j]){
+                        $fileSeen = 0;
+                    }
+                }
+                if ( $string =~ qr/$pattern/ && $strings != 1 ){
+                     print "$files[$j]:$string";
+                   }
+                if ( $string =~ qr/$pattern/ && $strings == 1 && $fileSeen == 0){
+                    print "$files[$j]\n";
+                    $fileSeen = 1;
+                    $file = $files[$j];
+                }
+            }
+            
+    }
+    if ( qr/$pattern/ && $files[j] != -T){
+        print "$files[$j]";
+    }
+    $j++;
+  }
+  $i++;
+}

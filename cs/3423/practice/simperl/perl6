@@ -1,0 +1,5 @@
+#!/usr/bin/perl -w
+foreach $arg ( @ARGV ){
+    @files = `find $arg -type f -or -type l -xtype f`;
+    print @files;
+}

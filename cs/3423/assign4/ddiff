@@ -1,0 +1,120 @@
+#!/usr/bin/perl -w
+
+die "ddiff [-ds12] <directory 1> <directory 2>\nSwitches must be together.\n" if @ARGV > 3;
+
+$dPrint = 0;
+$sPrint = 0;
+$dir1Print = 0;
+$dir2Print = 0;
+$bSwitch = 1;
+
+if ( $ARGV[0] =~ /^[-]/ ){
+    if ( $ARGV[0] =~ /d/ ){
+        $dPrint = 1;
+        # print "Going to print same named files that differ.\n";
+    }
+    if ( $ARGV[0] =~ /s/ ){
+        $sPrint = 1;
+        # print "Going to print same named files that do not differ.\n";
+    }
+    if ( $ARGV[0] =~ /1/ ){
+        $dir1Print = 1;
+        # print "Going to print only files from directory 1.\n";
+    }
+    if ( $ARGV[0] =~ /2/ ){
+        $dir2Print = 1;
+        # print "Going to print only files form directory 2.\n";
+    }
+}else{
+    $dPrint = 1;
+    $sPrint = 1;
+    $dir1Print = 1;
+    $dir2Print = 1;
+    $bSwitch = 0;
+    # print "No switch, so use all options.\n";
+}
+if ( $bSwitch ){
+    $dir1 = $ARGV[1];
+    $dir2 = $ARGV[2];
+} else {
+    $dir1 = $ARGV[0];
+    $dir2 = $ARGV[1];
+}
+
+# print "$dir1\n";
+# print "$dir2\n";
+
+@files1 = `find $dir1 -maxdepth 1 -type f -or -type l -xtype f`;
+@files2 = `find $dir2 -maxdepth 1 -type f -or -type l -xtype f`;
+
+# print @files1;
+# print @files2;
+
+foreach $file( @files1 ){
+    $tmp = $file;
+    chop $tmp;
+    unless ( -d $tmp ){
+        @temp = split( /\//, $file );
+        push @fName1, $temp[scalar(@temp)-1];
+    }
+}
+
+foreach $file( @files2 ){
+    $tmp = $file;
+    chop $tmp;
+    unless ( -d $tmp ){
+        @temp = split( /\//, $file );
+        push @fName2, $temp[scalar(@temp)-1];
+    }
+}
+
+# print @fName1;
+# print "\n <<<<SPACE>>>> \n\n";
+# print @fName2;
+
+for ($i = 0; $i < scalar(@fName1) - 1; $i++){
+    for ($j = 0; $j < scalar(@fName2) - 1; $j++){
+        if ( ( $sPrint == 1 || $dPrint == 1 ) && $fName1[$i] eq $fName2[$j]){
+            # print "Directory 1: Determining if text in similar files differ.\n";
+            chop $fName1[$i];
+            chop $fName2[$j];
+            $path1 = $dir1 . '/' . $fName1[$i];
+            $path2 = $dir2 . '/' . $fName2[$j];
+            $diff = `/usr/bin/diff -q $path1 $path2`;
+                if ( $diff ne "" && $dPrint == 1 ){
+                    print "> $fName1[$i] <\n";
+                    push @match, $fName1[$i];
+                }
+                if ( $diff eq "" && $sPrint == 1 ){
+                    print "< $fName1[$i] >\n";
+                    push @match, $fName1[$i];
+                }
+            }
+        }
+        if ( !(grep {$_ eq $fName1[$i]} @fName2) && $dir1Print == 1 ){
+            print "<<< $fName1[$i]\n";
+            
+        }
+    }   
+
+for ($j = 0; $j < scalar(@fName2) -1; $j++){
+    if (($matched) = grep $_ eq $fName2[$j], @fName1){
+        if ( ( $sPrint == 1 || $dPrint == 1 ) && !(grep {$_ eq $matched} @match) ){
+            # print "Directory 2: Determining if text in similar files differ.\n";
+            $path1 = $dir1 . '/' . $fName2[$j];
+            $path2 = $dir2 . '/' . $fName2[$j];
+            $diff = `/usr/bin/diff -q $path1 $path2`;
+            if ($diff ne "" && $dPrint == 1){
+                print "> $fName2[$j] <\n";
+            }
+            if ($diff eq "" && $sPrint == 1){
+                print "< $fName2[$j] >\n";
+            }
+        }
+    }
+    if ( !(grep $_ eq $fName2[$j], @fName1) && $dir2Print == 1 ){
+            print ">>> $fName2[$j]\n";
+        
+    }
+}
+

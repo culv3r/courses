@@ -1,0 +1,11 @@
+#!/usr/bin/perl -w
+$i = 0;
+foreach $arg ( @ARGV ){
+    open(FILE, $arg);
+    while ($file = <FILE>){
+        @fields = split /:/, $file;
+        @lines[$i] = "$fields[0]\t\t$fields[4]\n";
+        $i++;
+    }
+}
+print sort @lines;

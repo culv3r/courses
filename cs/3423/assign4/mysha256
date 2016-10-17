@@ -1,0 +1,28 @@
+#!/usr/bin/perl -w
+open(INFILE,$ARGV[0]) or die "Can't open $ARGV[0]: $!\n";
+$noPrint = 0;
+if(defined $ARGV[1]){
+   open(OUTFILE,"> $ARGV[1]") or die;
+   $noPrint = 1;
+  } 
+
+foreach $arg (<INFILE>){
+    @files = `find $arg -type f -type l -xtype f`;
+    chop @files;
+    $i=0;
+    while ($files[$i]){
+        if ( -f $files[$i] || ( -l $files[$i] && -f $files[$i] ) ){
+           open(SHA256,"/usr/bin/sha256sum $files[$i] |") or die "Unable to execute /usr/bin/sha256sum: $!\n";
+       }
+        while ($sum = <SHA256>){
+            @output = split(/ +/,$sum);
+            if ($noPrint == 1){
+                print OUTFILE "$output[1] $output[0]\n";
+            }
+            if ($noPrint == 0){
+                print STDOUT "$output[1] $output[0]\n";
+            }
+        }
+        $i++;
+    }
+}
