@@ -4,7 +4,7 @@ foreach $arg ( @ARGV ){
     open(FILE, $arg);
     while ($file = <FILE>){
         @fields = split /:/, $file;
-        @lines[$i] = "$fields[0]\t\t$fields[4]\n";
+        $lines[$i] = "$fields[0]\t\t$fields[4]\n";
         $i++;
     }
 }

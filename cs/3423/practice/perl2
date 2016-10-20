@@ -1,13 +1,11 @@
 #!/usr/bin/perl -w
 die "Not enough arguments\n" if @ARGV < 1;
-$regexp = qr/$ARGV[0]/;
-$i = 1;
-foreach $arg ( $ARGV[$i] ){
-    open(FILE,$arg) or die "Can't open $arg: $!\n";
-    while($line = <FILE>){
-        if ($line =~ /$regexp/){
-                print "$arg:$line";
-            }
+$regexp = shift @ARGV;
+foreach $arg (@ARGV){
+    @strings = `/usr/bin/strings $arg`;
+    foreach $string (@strings){
+        if ($string =~ qr/$regexp/){
+            print "$arg:$string";
         }
-        $i++;
     }
+}
