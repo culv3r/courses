@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/fcntl.h>
 #include <sys/types.h>
@@ -10,8 +11,8 @@ int main (int argc, char *argv[]){
     int i,j,n,ndx,num,rng;
     pid_t child;
     int fd[9][2];
-    char buf[9], recBuf[9];
-    size_t nbytes;
+    char buf[9], msg[9];
+    ssize_t nbytes;
 
     //Create Pipes
     for (i=0; i<=PROCESS_IDS; i++){
@@ -19,47 +20,33 @@ int main (int argc, char *argv[]){
     }
 
     //Fork Processes
-    for (i = 1; i<=PROCESS_IDS; i++){
-        if (child = fork()){
-            printf("I am the parent process.\n");         
-            ndx = 0;
-            srand(1313317*0);
+    for (i = 0; i<=PROCESS_IDS; i++){
+        if (i == 0){
+            continue;
+        }
+        if ((child = fork())<=0){ 
+            //printf("My index is %d\n", i);
+            ndx = i;
+            srand(1313317*i);
             break;
         }
-
-        if (child == -1){
-            perror("Fork error");
-            exit(-1);
-        }
-        if (child == 0){
-            ndx = i;
-            printf("My index is %d\n", ndx);
-            srand(1313317*i);
-        }
+        ndx = 0;
+        srand(1313317*0);
     }
 
     //Close Proper Communication Channels
-    //0 = Input (Write)
-    //1 = Output (Read)
-    if (child == 0){
-        for (j = 0;j<=PROCESS_IDS;j++){
-            if (j == ndx){
-                close(fd[j][0]);
-            }
-            if (j != ndx){
-                close(fd[j][1]);
-            }
+    //0 = Input (Read)
+    //1 = Output (Write)
+
+    for (j = 0;j<=PROCESS_IDS;j++){
+        if (j == ndx){
+            close(fd[j][1]);
         }
-    }else{
-        for (j = 0; j<=PROCESS_IDS;j++){
-            if (j == ndx){
-                close(fd[j][0]);
-            }
-            if (j != ndx){
-                close(fd[j][1]);
-            }
+        if (j != ndx){
+            close(fd[j][0]);
         }
     }
+
 
     //Random Number Generation
     rng = RAND_MAX/9;
@@ -70,27 +57,18 @@ int main (int argc, char *argv[]){
             j = num%9;
         }
         while (num >= rng || ndx == j);
-        sprintf(buf,"process%d",ndx);
-        nbytes = write(fd[j][1], buf, sizeof buf);
-        if (nbytes != sizeof buf){
-            perror("Write error");
-            exit(-1);
-        }
-
+        sprintf(msg, "process%d", ndx);
+        write(fd[j][1], msg, sizeof msg);
     }
-
+    
     //Close Pipes
     for (j = 0;j<=PROCESS_IDS;j++){
-        if (j != ndx){
-            close(fd[j][0]);
-        }
+            close(fd[j][1]);
     }
 
     //Read Messages
    while ((nbytes = read(fd[ndx][0],buf,sizeof buf)) > 0){
             printf("process%d has received a message from %s\n",ndx,buf);
     }
-
-        
+    
 }
-
