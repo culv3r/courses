@@ -8,7 +8,7 @@
 
 
 int main (int argc, char *argv[]){
-    int i,j,n,ndx,num,rng;
+    int i,j,n,ndx,num,rng,result;
     pid_t child;
     int fd[9][2];
     char buf[9], msg[9];
@@ -16,7 +16,10 @@ int main (int argc, char *argv[]){
 
     //Create Pipes
     for (i=0; i<=PROCESS_IDS; i++){
-        pipe(fd[i]);
+        if((result = pipe(fd[i]))!=0){
+            perror("pipe error");
+            exit(-1);
+        }
     }
 
     //Fork Processes
@@ -58,7 +61,11 @@ int main (int argc, char *argv[]){
         }
         while (num >= rng || ndx == j);
         sprintf(msg, "process%d", ndx);
-        write(fd[j][1], msg, sizeof msg);
+        nbytes = write(fd[j][1], msg, sizeof msg);
+        if (nbytes < 0){
+            perror("write error");
+            exit(-1);
+        }
     }
     
     //Close Pipes
