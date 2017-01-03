@@ -1,0 +1,5 @@
+#!/usr/bin/perl -w
+die "sperl1 arg1 arg2..." unless @ARGV >= 1;
+foreach $arg (@ARGV){
+    print $arg, "\n";
+}
