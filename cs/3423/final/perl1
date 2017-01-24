@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+open(INFILE1,"$ARGV[0]") || die "Unable to open $ARGV[0]: $!\n";
+open(INFILE2,"$ARGV[1]") || die "Unable to open $ARGV[1]: $!\n";
+
+$line1 = <INFILE1>;
+$line2 = <INFILE2>;
+while ( $line1 || $line2 ) {
+    print $line1, $line2;
+    $line1 = <INFILE1>;
+    $line2 = <INFILE2>;
+}

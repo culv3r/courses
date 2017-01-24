@@ -1,0 +1,7 @@
+#!/usr/bin/perl -w
+die "Usage sperl6" unless @ARGV >= 1;
+$dir = shift @ARGV;
+@find = `/usr/bin/find $dir -type d -or -type l -xtype d`;
+@find = sort @find;
+splice(@find,0,1);
+print @find;

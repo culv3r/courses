@@ -1,0 +1,10 @@
+#!/usr/bin/perl -w
+die "Usage: sperl4 file1 file2 ..." unless @ARGV >= 1;
+while (<>){
+    @fields = split(/:/);
+    $login{$fields[0]} = $fields[4];
+}
+
+foreach $user (sort keys %login){
+    print "$user\t\t$login{$user}\n";
+}

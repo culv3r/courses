@@ -1,0 +1,11 @@
+#!/usr/bin/perl -w
+
+die "Usage: perl3 file1 file2 ..." unless @ARGV >= 1;
+
+while (<>){
+    open(FILE,$_);
+    while (<FILE>){
+        print;
+    }
+    close FILE;
+}
