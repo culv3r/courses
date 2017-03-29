@@ -1,0 +1,21 @@
+	.file	"calc.c"
+	.text
+.globl calc
+	.type	calc, @function
+calc:
+	pushl	%ebp //Push parameter values onto stack
+	movl	%esp, %ebp //Move stack pointer to base pointer location
+	movl	8(%ebp), %edx //Point at first value and push to EDX register
+	movl	16(%ebp), %ecx // Point at third value and push to ECX register
+	leal	(%edx,%edx,2), %edx //Multiply edx (x) by 3 (edx = edx + edx *2)
+	movl	12(%ebp), %eax //Point at second value and push to EAX register
+	leal	(%edx,%eax,2), %eax //Add x and y together after multipying y by 2 (eax = edx + eax * 2)
+	movl	%ecx, %edx //move z to EDX
+	sall	$4, %edx //Shift edx by 4 (edx = 16z)
+	subl	%ecx, %edx //Subtract z by 1, effectively making it 15z
+	addl	%edx, %eax //Add all values and store in eax
+	popl	%ebp 
+	ret
+	.size	calc, .-calc
+	.ident	"GCC: (Ubuntu 4.3.3-5ubuntu4) 4.3.3"
+	.section	.note.GNU-stack,"",@progbits

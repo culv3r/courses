@@ -1,0 +1,35 @@
+	.file	"testcalc.c"
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"x=%d, y=%d, z=%d, result=%d\n"
+	.text
+.globl main
+	.type	main, @function
+main:
+	leal	4(%esp), %ecx // Save location of end of stack pointer in ECX
+	andl	$-16, %esp // Move stack pointer
+	pushl	-4(%ecx) // Push stack pointer location start
+	pushl	%ebp // Push local variables onto base pointer
+	movl	%esp, %ebp //Move stack pointer to base position
+	pushl	%ecx // Push next pointer onto stack
+	subl	$36, %esp // Move stack pointer to beginning of stack.
+	movl	$11, 8(%esp) //Set z at 11, at third position on stack
+	movl	$6, 4(%esp) //Set y at 6, at second position on stack
+	movl	$2, (%esp) //Set x at 2, at first position on stack
+	call	calc // Call Calc function
+	movl	%eax, 20(%esp) //Save location of 20+ESP to register EAX
+	movl	$11, 16(%esp) //Set Z in Call function
+	movl	$6, 12(%esp) // Set Y in call function
+	movl	$2, 8(%esp) // Set x in call function
+	movl	$.LC0, 4(%esp) //Set string on stack from .LCO
+	movl	$1, (%esp) //Move result onto stack
+	call	__printf_chk //Print F
+	movl	$0, %eax //Set EAX to 0
+	addl	$36, %esp //Add sum
+	popl	%ecx //Pop Register
+	popl	%ebp // Pop Base pointer
+	leal	-4(%ecx), %esp // Set stack pointer to beginning
+	ret
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 4.3.3-5ubuntu4) 4.3.3"
+	.section	.note.GNU-stack,"",@progbits

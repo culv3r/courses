@@ -1,0 +1,24 @@
+	.file	"calcnew.c"
+	.text
+.globl calcnew
+	.type	calcnew, @function
+calcnew:
+	pushl	%ebp // Push params to stack
+	movl	%esp, %ebp  // Move stack pointer to base pointer location
+	movl	8(%ebp), %edx //Set x as edx
+	movl	16(%ebp), %ecx //Set z as ecx
+	sall    $2, %edx //Shift edx by 2 (4x)
+	subl    %eax, %edx //Subtract 1 from x (3x)
+	movl	12(%ebp), %eax //Set y to EAX
+	sall    $3, %eax //Shift y by 3 (8y)
+	subl    $1, %eax //Sub y by 1 (7y)
+	movl	%ecx, %edx
+	sall    $4, %edx //Shift z by 4 (16z)
+	subl    %ecx, %edx //Sub 1 from z (15z)
+	subl    %ecx, %edx //Sub 1 from z (14z)
+	addl	%edx, %eax //Add all
+	popl	%ebp //Free stack
+	ret //Return value
+	.size	calcnew, .-calcnew
+	.ident	"GCC: (Ubuntu 4.3.3-5ubuntu4) 4.3.3"
+	.section	.note.GNU-stack,"",@progbits
