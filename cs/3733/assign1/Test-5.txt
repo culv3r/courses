@@ -1,0 +1,7 @@
+./assign1 3 3 2 3 2 1 2
+Assignment 1 program was written by Daniel Larsen.
+inputs: 3 3 2 3 2 1 2
+
+RRRwwRRR
+rrrRRwrrRR
+0 5 2.5 1.00000

@@ -1,0 +1,13 @@
+1. List all of the people that you have collaborated with on this assignment. For each person indicate the level of collaboration (small, medium, large). Also write a few sentences describing what was discussed. Indicate whether you were mainly giving help or receiving help.
+
+>> I had no one collaborate with me on this assignment. It was completed of my own volition.
+
+2. Do you think everything you did is correct? .....
+
+>> I think everything that I did is correct. I believe I have accounted for all situations.
+
+3. If not, give a brief description of what is working and what progress was made on the part that is not working.
+
+4. Comments (e.g., what were the challenges, how to make this assignment more interesting etc.):
+
+>> Returning to C after what has seemed a rather long hiatus over the summer was very challenging. As powerful a language that C is, it is not without it's caveats that make you wish for Java or some other high-level language.

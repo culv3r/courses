@@ -1,0 +1,16 @@
+Please enter an integer: 5
+You entered the integer: 5, largest integer so far is: 5.
+Please enter an integer: 29
+You entered the integer: 29, largest integer so far is: 29.
+Please enter a double: 54.21
+You entered the double: 54.210000, largest double so far is: 54.210000.
+Please enter a double: 2.39
+You entered the double: 2.390000, largest double so far is: 54.210000.
+Please enter your string: Hello there you fanciful devil you!
+You entered the String: "Hello there you fanciful devil you!", largest string so far is:"Hello there you fanciful devil you!".
+Please enter your string: Perhaps we should try to do a loooooooooooooooooooooooooooooooooooooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnnnnnnngggggggggggg tirade to overflow this evil thing!
+You entered the String: "Perhaps we should try to do a loooooooooooooooooooooooooooooooooooooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnnnnnnngggggggggggg tirade to overflow this evil thing!", largest string so far is:"Perhaps we should try to do a loooooooooooooooooooooooooooooooooooooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnnnnnnngggggggggggg tirade to overflow this evil thing!".
+Your largest integer was: 29
+Your largest double was: 54.210000
+Your largest string was:"Perhaps we should try to do a loooooooooooooooooooooooooooooooooooooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnnnnnnngggggggggggg tirade to overflow this evil thing!".
+

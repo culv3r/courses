@@ -1,0 +1,14 @@
+1. I am the sole individual who worked on this assignment.
+
+2. I think everything I did is correct.
+
+3. N/A
+
+4. Challenges arose with the runalla file as it was no longer dynamically allocated.
+
+5. ls -l fcfsa.all output:
+   -rw-r--r-- 1 culv3r users 124000015 Sep  7 22:02 fcfsa.all
+   wc fcfsa.all output:
+   2000001   2000003 124000015 fcfsa.all
+   md5sum fcfsa.all output:
+   0033b07a3d308765656cef111313845c  fcfsa.all
