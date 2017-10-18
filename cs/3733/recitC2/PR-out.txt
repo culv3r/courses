@@ -1,0 +1,12 @@
+Student Name: Daniel Larsen
+Input File Name: input1.txt
+CPU Scheduling Alg: PR
+
+Process 4 is completed at 4 ms.
+Process 1 is completed at 9 ms.
+Process 2 is completed at 16 ms.
+Process 3 is completed at 22 ms.
+
+Average Waiting time = 7.25 ms	(29/4)
+Average Turnaround time = 12.75 ms	(51/4)
+Throughput = 0.18 jobs per ms	(4/22)

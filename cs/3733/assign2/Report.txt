@@ -1,0 +1,29 @@
+1. I worked on this assignment by myself.
+
+2. I do think everything I did is correct.
+
+3. N/A
+
+4. Challenges I faced revoled around defining the difference between waiting and ready and putting those states in the appropriate place.
+
+5.
+
+LS Output:
+-rw-r--r-- 1 culv3r users 44344515 Sep 25 18:58 fcfs.all
+-rw-r--r-- 1 culv3r users 42614544 Sep 25 18:58 psjf.all
+-rw-r--r-- 1 culv3r users 45442282 Sep 25 18:58 rr.all
+-rw-r--r-- 1 culv3r users 43243799 Sep 25 18:58 sjf.all
+
+WC Output:
+  2000001   2000003  44344515 fcfs.all
+  2000001   2000003  42614544 psjf.all
+  2000001   2000003  45442282 rr.all
+  2000001   2000003  43243799 sjf.all
+  8000004   8000012 175645140 total
+
+MD5 Output:
+4998a59f278711bc6244f4182714e848  fcfs.all
+bee4c062dc415a6fd99e7c5346254da6  psjf.all
+e34c0eb69b23ed76794b317b8cb7ba65  rr.all
+c703316a8dc5a0f4ef4e1e546991a766  sjf.all
+

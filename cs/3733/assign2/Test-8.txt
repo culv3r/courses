@@ -1,0 +1,22 @@
+Assignment 2 program was written by Daniel Larsen.
+inputs: 3 4 2 5 3 2 2
+
+FCFS
+RRRRwwrRRRRR
+rrrrRRRwwrrrRR
+1 7 4.0 1.00000
+
+SJF
+rrrRRRRwwRRRRR
+RRRwwrrRR
+3 2 2.5 1.00000
+
+PSJF
+rrrRRRRwwRRRRR
+RRRwwrrRR
+3 2 2.5 1.00000
+
+RR
+RRRrrrRwwrRRRRR
+rrrRRRwwRR
+4 3 3.5 0.93333
