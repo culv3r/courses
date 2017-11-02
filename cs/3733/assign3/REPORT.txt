@@ -1,0 +1,8 @@
+1. No one collaborated with me on this assignment.
+2. I'm pretty sure the first part is correct. The second part I'm unsure of.
+3. I don't have the second part seg faulting anymore so I'm hoping that it is working as required to translate properly.
+4. The challenge was to build a simulated Memory Management Unit.
+5.
+ceabc02825a5b908e474b053074ab53c  output-part1
+d6e3576fddc5b544af175273eb4084c3  output-part2
+Page Faults: 3180
